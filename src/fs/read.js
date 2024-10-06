@@ -1,15 +1,19 @@
 import fs from 'fs'
 const path = './src/fs/files/'
-const source = 'fileToRead.txt'
+const file = 'fileToRead.txt'
 
-const read = async () => {
-    fs.readFile(path + source, 'utf8', (err, data) => {
-        if (err) {
-            console.error("FS Operation failed", err)
-        } else {
+const read = async (source) => {
+    try {
+    const data = await fs.promises.readFile(source, 'utf8') 
+        try {
             console.log(data)
+        } catch (error) {
+            console.error("FS Operation failed", error)
         }
-    })
-};
+    } catch {
+        console.error("FS Operation failed")
+    }
+}
 
-await read();
+
+await read(path + file);
